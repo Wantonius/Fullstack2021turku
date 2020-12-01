@@ -11,6 +11,7 @@ export default class ContactList extends React.Component {
 					<Table.Cell>{contact.lastname}</Table.Cell>
 					<Table.Cell>{contact.email}</Table.Cell>
 					<Table.Cell>{contact.phone}</Table.Cell>
+					<Table.Cell><Button onClick={() => this.props.removeFromList(index)}>Remove</Button></Table.Cell>
 				</Table.Row>
 			)
 		})	
@@ -22,6 +23,7 @@ export default class ContactList extends React.Component {
 						<Table.HeaderCell>Last Name</Table.HeaderCell>
 						<Table.HeaderCell>Email</Table.HeaderCell>
 						<Table.HeaderCell>Phone</Table.HeaderCell>
+						<Table.HeaderCell>Remove</Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>

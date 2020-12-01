@@ -19,11 +19,19 @@ class App extends React.Component {
 		}));
 	}
 	
+	removeFromList = (index) => {
+		let tempList = this.state.list;
+		tempList.splice(index,1);
+		this.setState({
+			list:tempList
+		})
+	}
+	
 	render() {
 		return (
 			<div className="App">
 				<ContactForm addToList={this.addToList}/>
-				<ContactList list={this.state.list}/>
+				<ContactList list={this.state.list} removeFromList={this.removeFromList}/>
 			</div>
 		);
 	}
