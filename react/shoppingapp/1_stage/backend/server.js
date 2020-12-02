@@ -50,5 +50,5 @@ app.put("/api/shopping/:id",function(req,res) {
 	return res.status(404).json({message:"not found!"});
 })
 
-app.listen(3000);
-console.log("Running in port 3000");
+app.listen(3001);
+console.log("Running in port 3001");
