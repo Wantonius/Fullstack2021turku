@@ -42,6 +42,41 @@ class App extends React.Component {
 		});
 	}
 	
+	addToList = (item) => {
+		let request = {
+			method:"POST",
+			mode:"cors",
+			headers:{"Content-type":"application/json"},
+			body:JSON.stringify(item)
+		}
+		fetch("/api/shopping",request).then(response => {
+			if(response.ok) {
+				this.getList();
+			} else {
+				console.log("Server responded with a status:"+response.status);
+			}
+		}).catch(error => {
+			console.log("Server responded with an error. Reason:",error);
+		});
+	}
+	
+	removeFromList = (id) => {
+		let request = {
+			method:"DELETE",
+			mode:"cors",
+			headers:{"Content-type":"application/json"}
+		}
+		fetch("/api/shopping/"+id,request).then(response => {
+			if(response.ok) {
+				this.getList();
+			} else {
+				console.log("Server responded with a status:"+response.status);
+			}
+		}).catch(error => {
+			console.log("Server responded with an error. Reason:",error);
+		});		
+	}
+	
     render() {
 		return (
 			<div className="App">
@@ -49,10 +84,11 @@ class App extends React.Component {
 				<hr/>
 				<Switch>
 					<Route exact path="/" render={() =>
-						(<ShoppingList list={this.state.list}/>)
+						(<ShoppingList list={this.state.list}
+							removeFromList={this.removeFromList}/>)
 					}/>
 					<Route path="/form" render={() => 
-						(<ShoppingForm/>)
+						(<ShoppingForm addToList={this.addToList}/>)
 					}/>
 				</Switch>
 			</div>
