@@ -77,6 +77,25 @@ class App extends React.Component {
 		});		
 	}
 	
+	editItem = (item) => {
+		let request = {
+			method:"PUT",
+			mode:"cors",
+			headers:{"Content-type":"application/json"},
+			body:JSON.stringify(item)
+		}
+		fetch("/api/shopping/"+item.id,request).then(response => {
+			if(response.ok) {
+				this.getList();
+			} else {
+				console.log("Server responded with a status:"+response.status);
+			}
+		}).catch(error => {
+			console.log("Server responded with an error. Reason:",error);
+		});		
+	}
+	
+	
     render() {
 		return (
 			<div className="App">
@@ -85,7 +104,8 @@ class App extends React.Component {
 				<Switch>
 					<Route exact path="/" render={() =>
 						(<ShoppingList list={this.state.list}
-							removeFromList={this.removeFromList}/>)
+							removeFromList={this.removeFromList}
+							editItem={this.editItem}/>)
 					}/>
 					<Route path="/form" render={() => 
 						(<ShoppingForm addToList={this.addToList}/>)

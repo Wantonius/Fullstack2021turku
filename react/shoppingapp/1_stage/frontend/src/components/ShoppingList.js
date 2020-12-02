@@ -2,6 +2,7 @@ import React from 'react';
 import {Table,Button} from 'semantic-ui-react';
 import Row from './Row';
 import RemoveRow from './RemoveRow';
+import EditRow from './EditRow';
 
 export default class ShoppingList extends React.Component {
 
@@ -23,7 +24,17 @@ export default class ShoppingList extends React.Component {
 			}
 		}
 	}
-	
+
+	handleEditButton = (id) => {
+		for(let i=0;i<this.props.list.length;i++) {
+			if(id === this.props.list[i].id) {
+				this.setState({
+					removeIndex:-1,
+					editIndex:i
+				})
+			}
+		}
+	}	
 	cancel = () => {
 		this.setState({
 			removeIndex:-1,
@@ -35,15 +46,24 @@ export default class ShoppingList extends React.Component {
 		this.props.removeFromList(id);
 		this.cancel();
 	}
+	
+	editItem = (item) => {
+		this.props.editItem(item);
+		this.cancel();
+	}
 
 	render() {
 		let items = this.props.list.map((item,index) => {
 			if(index === this.state.removeIndex) {
 				return (<RemoveRow item={item} key={item.id} removeFromList={this.removeFromList} cancel={this.cancel}/>)
 			}
+			if(index === this.state.editIndex) {
+				return (<EditRow item={item} key={item.id} editItem={this.editItem} cancel={this.cancel}/>)
+			}
 			
 			return (	
-				<Row item={item} key={item.id} handleRemoveButton={this.handleRemoveButton}/>
+				<Row item={item} key={item.id} handleRemoveButton={this.handleRemoveButton}
+				handleEditButton={this.handleEditButton}/>
 			)
 		})
 		return(
