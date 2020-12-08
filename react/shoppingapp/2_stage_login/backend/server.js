@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 let registeredUsers = [];
 let loggedSessions = [];
-const ttl_diff = 36000000;
+const ttl_diff = 3600000;
 
 //MIDDLEWARE
 

@@ -6,7 +6,7 @@ export default class Navbar extends React.Component {
 	
 	render() {
 		let navStyle = {
-			height:80,
+			height:100,
 			backgroundColor:"lightblue"
 		}
 		if(this.props.isLogged) {
@@ -16,6 +16,7 @@ export default class Navbar extends React.Component {
 					<List>
 						<List.Item><Link to="/list">Shopping List</Link></List.Item>
 						<List.Item><Link to="/form">Add to list</Link></List.Item>
+						<List.Item><Link to="/" onClick={() => this.props.logout()}>Logout</Link></List.Item>
 					</List>
 				</div>
 			)
