@@ -98,7 +98,7 @@ const loginReducer = (state = initialState, action) => {
 		case LOGOUT_FAILED:
 			tempState = {
 				isLogged:false,
-				token:token,
+				token:"",
 				loading:false,
 				error:action.error
 				}
