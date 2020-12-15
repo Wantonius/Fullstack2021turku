@@ -4,7 +4,7 @@ import Row from './Row';
 import RemoveRow from './RemoveRow';
 import EditRow from './EditRow';
 import {connect} from 'react-redux';
-import {getList} from '../actions/shoppingActions';
+import {getList,removeFromList,editItem} from '../actions/shoppingActions';
 
 class ShoppingList extends React.Component {
 
@@ -59,12 +59,12 @@ class ShoppingList extends React.Component {
 	}
 	
 	removeFromList = (id) => {
-		this.props.removeFromList(id);
+		this.props.dispatch(removeFromList(id,this.props.token));
 		this.cancel();
 	}
 	
 	editItem = (item) => {
-		this.props.editItem(item);
+		this.props.dispatch(editItem(item,this.props.token));
 		this.cancel();
 	}
 
