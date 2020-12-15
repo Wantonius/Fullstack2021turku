@@ -48,6 +48,37 @@ export const getList = (token,query) => {
 		});
 	}
 }
+
+export const addToList = (item,token) => {
+	return (dispatch) => {
+		let request = {
+			method:"POST",
+			mode:"cors",
+			headers:{"Content-type":"application/json",
+					token:token},
+			body:JSON.stringify(item)
+		}
+		dispatch(loading());
+		fetch("/api/shopping",request).then(response => {
+			dispatch(loadingDone());
+			if(response.ok) {
+				dispatch(getList(token));
+				dispatch(addToShoppinglistSuccess());
+			} else {
+				if(response.status === 403) {
+					dispatch(clearLoginState());
+					dispatch(clearShoppingState());
+					dispatch(addToShoppinglistFailed("Server responded with an expired session. Logging you out!"));
+				} else {
+					dispatch(addToShoppinglistFailed("Server responed with a status:"+response.statusText));	
+				}
+			}
+		}).catch(error => {
+			dispatch(loadingDone());
+			dispatch(addToShoppinglistFailed("Server responded with an error:"+error));
+		});
+	}
+}
 //ACTIONS
 
 export const fetchShoppinglistSuccess = (list) => {

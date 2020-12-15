@@ -17,28 +17,7 @@ class App extends React.Component {
 	
 
 	
-	addToList = (item) => {
-		let request = {
-			method:"POST",
-			mode:"cors",
-			headers:{"Content-type":"application/json",
-					token:this.props.token},
-			body:JSON.stringify(item)
-		}
-		fetch("/api/shopping",request).then(response => {
-			if(response.ok) {
-				this.getList();
-			} else {
-				if(response.status === 403) {
-					this.clearState();
-					console.log("Session expired. Logging you out!");
-				}
-				console.log("Server responded with a status:"+response.status);
-			}
-		}).catch(error => {
-			console.log("Server responded with an error. Reason:",error);
-		});
-	}
+
 	
 	removeFromList = (id) => {
 		let request = {
@@ -97,14 +76,11 @@ class App extends React.Component {
 						(<LoginForm />)
 					}/>
 					<Route path="/list" render={() => this.props.isLogged ?
-						(<ShoppingList list={this.state.list}
-							removeFromList={this.removeFromList}
-							editItem={this.editItem}
-							getList={this.getList}/>) :
+						(<ShoppingList />) :
 						(<Redirect to="/"/>)
 					}/>
 					<Route path="/form" render={() => this.props.isLogged ?
-						(<ShoppingForm addToList={this.addToList}/>) :
+						(<ShoppingForm />) :
 						(<Redirect to="/"/>)
 					}/>
 				</Switch>
