@@ -1,3 +1,5 @@
+import {getList,clearShoppingState} from './shoppingActions';
+
 export const LOADING = "LOADING";
 export const LOADING_DONE = "LOADING_DONE"
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
@@ -30,6 +32,58 @@ export const register = (user) => {
 			}
 		}).catch(error => {
 			dispatch(registerFailed("Server responded with an error:"+error));
+		});
+	}
+}
+
+
+export const login = (user) => {
+	return (dispatch) => {
+		let request = {
+			method:"POST",
+			mode:"cors",
+			headers:{"Content-type":"application/json"},
+			body:JSON.stringify(user)
+		}
+		dispatch(loading());
+		fetch("/login",request).then(response => {
+			if(response.ok) {
+				response.json().then(data => {
+					dispatch(loginSuccess(data.token));
+					dispatch(getList(data.token));
+				}).catch(error => {
+					dispatch(loginFailed("Failed to parse JSON. Error:"+error));
+				})
+			} else {
+				dispatch(loginFailed("Server responded with a status:"+response.status));
+			}
+		}).catch(error => {
+			dispatch(loginFailed("Server responded with an error. Reason:"+error));
+		});
+	}	
+}
+
+	
+export const logout = (token) => {
+	return (dispatch) => {
+		let request = {
+			method:"POST",
+			mode:"cors",
+			headers:{"Content-type":"application/json",
+					token:token}
+		}
+		dispatch(loading());
+		fetch("/logout",request).then(response => {
+			if(response.ok) {
+				dispatch(logoutSuccess());
+				dispatch(clearShoppingState());
+			} else {
+				dispatch(logoutFailed("Server responded with a conflict. Logging you out!"))
+				dispatch(clearShoppingState());
+			}
+		}).catch(error => {
+			dispatch(logoutFailed("Server responded with an error:"+error+". Logging out!"));
+			dispatch(clearShoppingState());
 		});
 	}
 }

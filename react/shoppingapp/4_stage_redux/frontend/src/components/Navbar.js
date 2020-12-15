@@ -2,6 +2,7 @@ import React from 'react';
 import {List,Header} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {logout} from '../actions/loginActions';
 
 class Navbar extends React.Component {
 	
@@ -24,7 +25,7 @@ class Navbar extends React.Component {
 					<List>
 						<List.Item><Link to="/list">Shopping List</Link></List.Item>
 						<List.Item><Link to="/form">Add to list</Link></List.Item>
-						<List.Item><Link to="/" onClick={() => this.props.logout()}>Logout</Link></List.Item>
+						<List.Item><Link to="/" onClick={() => this.props.dispatch(logout(this.props.token))}>Logout</Link></List.Item>
 					</List>
 				</div>
 			)
@@ -40,13 +41,16 @@ class Navbar extends React.Component {
 
 const mapStateToProps = (state) => {
 	let error = "";
-	if(state.error) {
-		error = state.error
+	if(state.shopping.error) {
+		error = state.shopping.error
+	}
+	if(state.login.error) {
+		error = state.login.error
 	}
 	return {
-		isLogged:state.isLogged,
-		token:state.token,
-		loading:state.loading,
+		isLogged:state.login.isLogged,
+		token:state.login.token,
+		loading:state.login.loading,
 		error:error
 	}
 }
