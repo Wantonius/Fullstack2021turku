@@ -18,7 +18,7 @@ class ShoppingList extends React.Component {
 	}
 	
 	searchByType = (event) => {
-		this.props.dispatch(getList(this.state.search));
+		this.props.dispatch(getList(this.props.token,this.state.search));
 		this.setState({
 			search:""
 		})
