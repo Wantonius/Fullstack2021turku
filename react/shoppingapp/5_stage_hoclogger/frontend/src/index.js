@@ -10,6 +10,7 @@ import shoppingReducer from './reducers/shoppingReducer';
 import {createStore,applyMiddleware,combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
+import LoggerProvider from './logger/provider/LoggerProvider';
 
 const rootReducer = combineReducers({
 	login:loginReducer,
@@ -22,7 +23,9 @@ ReactDOM.render(
   <React.StrictMode>
 	  <Provider store={store}>
 		  <BrowserRouter>
-			<App />
+			<LoggerProvider url="">
+				<App />
+			</LoggerProvider>
 		  </BrowserRouter>
 	  </Provider>
   </React.StrictMode>,

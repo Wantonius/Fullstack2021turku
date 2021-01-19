@@ -5,6 +5,7 @@ import RemoveRow from './RemoveRow';
 import EditRow from './EditRow';
 import {connect} from 'react-redux';
 import {getList,removeFromList,editItem} from '../actions/shoppingActions';
+import HocLogger from '../logger/hoclogger/HocLogger';
 
 class ShoppingList extends React.Component {
 
@@ -59,11 +60,13 @@ class ShoppingList extends React.Component {
 	}
 	
 	removeFromList = (id) => {
+		this.props.hoclog(this.props.loglevels.LOG_INFO,"ShoppingList removefromList","Removing item of id:"+id);
 		this.props.dispatch(removeFromList(id,this.props.token));
 		this.cancel();
 	}
 	
 	editItem = (item) => {
+		this.props.hoclog(this.props.loglevels.LOG_INFO,"ShoppingList editItem","Editing item of id:"+item.id);
 		this.props.dispatch(editItem(item,this.props.token));
 		this.cancel();
 	}
@@ -116,4 +119,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps)(ShoppingList);
+export default HocLogger(connect(mapStateToProps)(ShoppingList));

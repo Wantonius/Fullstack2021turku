@@ -2,6 +2,7 @@ import React from 'react';
 import {Form,Button} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import {register,login} from '../actions/loginActions';
+import HocLogger from '../logger/hoclogger/HocLogger';
 
 class LoginForm extends React.Component {
 
@@ -26,8 +27,10 @@ class LoginForm extends React.Component {
 			password:this.state.password
 		}
 		if(event.target.name === "register") {
+			this.props.hoclog(this.props.loglevels.LOG_INFO,"LoginForm onSubmit","Registering user:"+this.state.username)
 			this.props.dispatch(register(user));
 		} else {
+			this.props.hoclog(this.props.loglevels.LOG_INFO,"LoginForm onSubmit","Logging user:"+this.state.username)
 			this.props.dispatch(login(user));
 		}
 		
@@ -59,4 +62,4 @@ class LoginForm extends React.Component {
 	}
 }
 
-export default connect()(LoginForm);
+export default HocLogger(connect()(LoginForm));
