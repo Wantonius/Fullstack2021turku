@@ -1,25 +1,36 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import {Switch,Route,Redirect} from 'react-router-dom';
+import StateManager from './statemanager/StateManager';
+import ShoppingForm from './components/ShoppingForm';
+import ShoppingList from './components/ShoppingList';
+import Navbar from './components/Navbar';
+import LoginForm from './components/LoginForm';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+	render() {
+		return (
+			<div className="App">
+				<Navbar/>
+				<hr/>
+				<Switch>
+					<Route exact path="/" render={() => this.props.isLogged ?
+					(<Redirect to="/list"/>) :
+					(<LoginForm/>)
+					}/>
+					<Route path="/list" render={() => this.props.isLogged ?
+					(<ShoppingList/>) :
+					(<Redirect to="/"/>)
+					}/>
+					<Route path="/form" render={() => this.props.isLogged ?
+					(<ShoppingForm/>) :
+					(<Redirect to="/"/>)
+					}/>
+				</Switch>
+			</div>
+		);
+	}
 }
 
-export default App;
+export default StateManager(App);
