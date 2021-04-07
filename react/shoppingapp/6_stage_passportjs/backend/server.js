@@ -9,16 +9,28 @@ const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const mongoStore = require("connect-mongo")(session);
+const config = require("./config");
 
+let port = process.env.PORT | 3001;
 
 let app = express();
 
 app.use(bodyParser.json());
 
+let url = "mongodb+srv://"+config.username+":"+config.password+"@"+config.database_url;
+/*
 mongoose.connect("mongodb://localhost/turkushopping").then(
 	() => console.log("Successfully connected to Mongodb"),
 	(error) => console.log("Failed to connect to Mongodb. Reason:",error)
 );
+*/
+
+mongoose.connect(url).then(
+	() => console.log("Successfully connected to Mongodb"),
+	(error) => console.log("Failed to connect to Mongodb. Reason:",error)
+);
+
+app.use(expres.static(__dirname+"/public_www"));
 
 app.use(session({
 	name:"shoppingapp-session",
@@ -172,5 +184,5 @@ app.post("/logout",function(req,res) {
 	
 app.use("/api",isUserLogged,apiroutes);
 
-app.listen(3001);
-console.log("Running in port 3001");
+app.listen(port);
+console.log("Running in port:"+port);
