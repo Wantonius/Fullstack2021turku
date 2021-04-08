@@ -1,0 +1,19 @@
+<form #loginform="ngForm">
+	<div class="form-group">
+		<label for="username">Username:</label>
+		<input type="text"
+				name="username"
+				id="username"
+				[(ngModel)]="username"/>
+	</div>
+	<div class="form-group">
+		<label for="password">Password:</label>
+		<input type="password"
+				name="password"
+				id="password"
+				[(ngModel)]="password"/>
+	</div>
+	<button class="btn btn-primary" (click)="register()">Register</button>
+	<button class="btn btn-primary" (click)="login()">Login</button>
+	<h3>{{message}}</h3>
+</form>
