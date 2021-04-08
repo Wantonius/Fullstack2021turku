@@ -1,4 +1,4 @@
-<table>
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Type</th>
@@ -12,7 +12,7 @@
 			<td>{{item.type}}</td>
 			<td>{{item.count}}</td>
 			<td>{{item.price}}</td>
-			<td><button (click)="removeFromList(item.id)">Remove</button></td>
+			<td><button class="btn btn-danger" (click)="removeFromList(item.id)">Remove</button></td>
 		</tr>
 	</tbody>
 </table>

@@ -10,13 +10,15 @@ import { ShoppingList } from './components/shoppinglist.component';
 import { ShoppingForm} from './components/shoppingform.component';
 import { LoginForm} from './components/loginform.component';
 import { LoginService} from './services/loginservice.service';
+import {Navbar} from './components/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
 	ShoppingList,
 	ShoppingForm,
-	LoginForm
+	LoginForm,
+	Navbar
   ],
   imports: [
     BrowserModule,
